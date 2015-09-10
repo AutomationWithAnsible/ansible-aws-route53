@@ -1,0 +1,13 @@
+---
+
+- name: Update A DNS record
+  route53:
+      command: "{{ aws_route53_command | default('create') }}"
+      zone: "{{ aws_route53_zone | default(omit) }}"
+      record: "{{ aws_route53_record }}"
+      ttl: "{{ aws_route53_ttl | default('30') }}"
+      type: "{{ aws_route53_type | default('A') }}"
+      value: "{{ aws_route53_value }}"
+      overwrite: "{{ aws_route53_overwrite | default(omit) }}"
+      retry_interval: "{{ aws_route53_retry | default(omit) }}"
+  when: aws_route53_value | default("") != "" 

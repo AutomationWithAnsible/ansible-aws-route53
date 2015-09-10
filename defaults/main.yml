@@ -1,0 +1,14 @@
+---
+
+# Specifies the action to take get, create and delete
+aws_route53_command   : "create"
+# The DNS zone to modify
+#aws_route53_zone      : "example.com"
+#aws_route53_record    : "db000.example.com"
+aws_route53_ttl       : "60"
+aws_route53_type      : "A"
+
+aws_route53_retry     : 2
+#aws_route53_value     : "192.168.1."
+# Default update records 
+aws_route53_overwrite : yes
