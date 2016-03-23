@@ -1,6 +1,6 @@
 ---
 
-- name: Update A DNS record
+- name: Update a single DNS record
   route53:
       command: "{{ aws_route53_command | default('create') }}"
       zone: "{{ aws_route53_zone | default(omit) }}"
@@ -10,4 +10,19 @@
       value: "{{ aws_route53_value }}"
       overwrite: "{{ aws_route53_overwrite | default(omit) }}"
       retry_interval: "{{ aws_route53_retry | default(omit) }}"
-  when: aws_route53_value | default("") != "" 
+  when: aws_route53_value | default("") != "" and aws_route53_value is string
+
+- debug: var=aws_route53_value
+
+- name: Update a multi DNS records
+  route53:
+      command: "{{ item.command | default('create') }}"
+      zone: "{{ item.zone | default(omit) }}"
+      record: "{{ item.record }}"
+      ttl: "{{ item.ttl | default('30') }}"
+      type: "{{ item.type | default('A') }}"
+      value: "{{ item.value }}"
+      overwrite: "{{ item.overwrite | default(omit) }}"
+      retry_interval: "{{ item.retry | default(omit) }}"
+  with_items: aws_route53_value
+  when: aws_route53_value | default("") != "" and aws_route53_value is iterable and aws_route53_value is not string
