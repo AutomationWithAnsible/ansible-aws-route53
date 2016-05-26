@@ -25,6 +25,6 @@
       value: "{{ item.value }}"
       overwrite: "{{ item.overwrite | default(omit) }}"
       retry_interval: "{{ item.retry | default(omit) }}"
-  with_items: aws_route53_value
+  with_items: "{{ aws_route53_value }}"
   when: aws_route53_value | default("") != "" and aws_route53_value is iterable and aws_route53_value is not string
   delegate_to: localhost
