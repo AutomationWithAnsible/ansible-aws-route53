@@ -11,6 +11,7 @@
       overwrite: "{{ aws_route53_overwrite | default(omit) }}"
       retry_interval: "{{ aws_route53_retry | default(omit) }}"
   when: aws_route53_value | default("") != "" and aws_route53_value is string
+  delegate_to: localhost
 
 - debug: var=aws_route53_value
 
@@ -26,3 +27,4 @@
       retry_interval: "{{ item.retry | default(omit) }}"
   with_items: aws_route53_value
   when: aws_route53_value | default("") != "" and aws_route53_value is iterable and aws_route53_value is not string
+  delegate_to: localhost
